@@ -10,6 +10,7 @@ interface Props {
 
 const ColumnContainer = (props: Props) => {
   const { column, deleteColumn } = props;
+
   const { setNodeRef, attributes, listeners, transform, transition } =
     useSortable({
       id: column.id,
