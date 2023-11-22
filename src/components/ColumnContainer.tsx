@@ -65,13 +65,14 @@ const ColumnContainer = (props: Props) => {
       </div>
     );
   }
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       className=" w-[350px] h-[500px] max-h-[500px] rounded-md bg-slate-700 flex flex-col"
     >
-      {/* Title */}
+      {/* Task Title */}
       <div
         {...attributes}
         {...listeners}
@@ -119,7 +120,7 @@ const ColumnContainer = (props: Props) => {
         </SortableContext>
       </div>
 
-      {/* Footer */}
+      {/* Task Footer */}
       <button
         className="p-4 flex gap-2 items-center rounded-md border-4 border-slate-700 hover:bg-slate-800 hover:text-rose-500 active:bg-slate-900"
         onClick={() => {
