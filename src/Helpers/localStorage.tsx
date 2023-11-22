@@ -9,7 +9,8 @@ export function savingLocal(columns: Column[], tasks: Task[]) {
   const serializedStore = JSON.stringify(store);
 
   localStorage.setItem("data", serializedStore);
-  console.log("Save to Local Storage");
+  window.alert("Save to Local Storage");
+  window.location.reload();
 }
 
 export function loadingLocal() {
@@ -17,5 +18,14 @@ export function loadingLocal() {
     const data = localStorage.getItem("data");
     return JSON.parse(data || "");
   }
-  return;
+  return [];
+}
+
+export function clearLocal() {
+  if (localStorage.getItem("data")) {
+    localStorage.removeItem("data");
+    window.location.reload();
+    return;
+  }
+  return window.alert("No Data");
 }

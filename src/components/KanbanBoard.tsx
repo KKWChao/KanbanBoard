@@ -15,11 +15,19 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
-import { loadingLocal, savingLocal } from "@/Helpers/localStorage";
+import { clearLocal, loadingLocal, savingLocal } from "@/Helpers/localStorage";
+import { generateId } from "@/Helpers/generateId";
 
 const KanbanBoard = () => {
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  // Loading local storage
+  const localData = loadingLocal();
+
+  const [columns, setColumns] = useState<Column[]>(localData.columns || []);
+  const [tasks, setTasks] = useState<Task[]>(localData.tasks || []);
+  const columnsId = useMemo(
+    () => columns.map((column) => column.id),
+    [columns]
+  );
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -34,18 +42,6 @@ const KanbanBoard = () => {
   );
 
   // Loading local storage
-  const localData = loadingLocal();
-  if (localData) {
-    console.log(columns);
-    console.log(localData.columns);
-  } else {
-    console.log("no");
-  }
-
-  const columnsId = useMemo(
-    () => columns.map((column) => column.id),
-    [columns]
-  );
 
   return (
     <div className="px-[40px] overflow-y-hidden overflow-x-auto w-full m-auto min-h-screen flex items-center">
@@ -73,7 +69,7 @@ const KanbanBoard = () => {
               ))}
             </SortableContext>
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between gap-2">
             <button
               className="h-[60px] w-[350px] min-w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 flex gap-2"
               onClick={() => {
@@ -83,14 +79,24 @@ const KanbanBoard = () => {
               <PlusIcon />
               Add Column
             </button>
-            {columns.length > 0 && (
-              <button
-                className="h-[60px] w-[350px] min-w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 flex gap-2"
-                onClick={() => savingLocal(columns, tasks)}
-              >
-                Save
-              </button>
-            )}
+            <div className="flex flex-col gap-2">
+              {columns.length > 0 && (
+                <button
+                  className="h-[60px] w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 active:bg-rose-400 flex gap-2"
+                  onClick={() => savingLocal(columns, tasks)}
+                >
+                  Save
+                </button>
+              )}
+              {localStorage.getItem("data") && (
+                <button
+                  className="h-[60px] w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 active:bg-rose-400 flex gap-2"
+                  onClick={() => clearLocal()}
+                >
+                  Clear Saves
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -122,11 +128,6 @@ const KanbanBoard = () => {
       </DndContext>
     </div>
   );
-
-  function generateId() {
-    // generate random number between 1-10000
-    return Math.floor(Math.random() * 10001);
-  }
 
   function createNewColumn() {
     const columnToAdd: Column = {
