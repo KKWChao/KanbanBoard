@@ -1,16 +1,22 @@
 import { Column, Task } from "@/types";
 
-export function savingLocal(columns: Column[], tasks: Task[]) {
+export function savingLocal(
+  columns: Column[],
+  tasks: Task[],
+  setIsSaving: React.Dispatch<React.SetStateAction<boolean>>
+) {
   const store = {
     columns: columns,
     tasks: tasks,
   };
 
   const serializedStore = JSON.stringify(store);
-
   localStorage.setItem("data", serializedStore);
-  window.alert("Save to Local Storage");
-  window.location.reload();
+  setIsSaving(true);
+  setTimeout(() => {
+    setIsSaving(false);
+    console.log("false");
+  }, 1000);
 }
 
 export function loadingLocal() {

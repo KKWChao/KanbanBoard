@@ -17,6 +17,8 @@ import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 import { clearLocal, loadingLocal, savingLocal } from "@/Helpers/localStorage";
 import { generateId } from "@/Helpers/generateId";
+import { createNewColumn } from "@/Helpers/columnHelper";
+import SaveModal from "./SaveModal";
 
 const KanbanBoard = () => {
   // Loading local storage
@@ -41,16 +43,17 @@ const KanbanBoard = () => {
     })
   );
 
-  // Loading local storage
-
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  console.log(isSaving);
   return (
-    <div className="px-[40px] overflow-y-hidden overflow-x-auto w-full m-auto min-h-screen flex items-center">
+    <div className="relative px-[40px] overflow-y-hidden overflow-x-auto w-full m-auto min-h-screen flex items-center">
       <DndContext
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         sensors={sensors}
       >
+        {isSaving && <SaveModal />}
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
@@ -73,7 +76,7 @@ const KanbanBoard = () => {
             <button
               className="h-[60px] w-[350px] min-w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 flex gap-2"
               onClick={() => {
-                createNewColumn();
+                createNewColumn(columns, setColumns);
               }}
             >
               <PlusIcon />
@@ -83,7 +86,7 @@ const KanbanBoard = () => {
               {columns.length > 0 && (
                 <button
                   className="h-[60px] w-[350px] p-4 border-2 rounded-lg bg-slate-800 border-slate-700 cursor-pointer ring-rose-500 hover:ring-2 active:bg-rose-400 flex gap-2"
-                  onClick={() => savingLocal(columns, tasks)}
+                  onClick={() => savingLocal(columns, tasks, setIsSaving)}
                 >
                   Save
                 </button>
@@ -128,14 +131,6 @@ const KanbanBoard = () => {
       </DndContext>
     </div>
   );
-
-  function createNewColumn() {
-    const columnToAdd: Column = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-    };
-    setColumns([...columns, columnToAdd]);
-  }
 
   function deleteColumn(id: Id) {
     const filteredColumn = columns.filter((column) => column.id !== id);

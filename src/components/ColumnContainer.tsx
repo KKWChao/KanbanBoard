@@ -81,7 +81,7 @@ const ColumnContainer = (props: Props) => {
       >
         <div className="flex gap-2">
           <div className="px-2 py-1 text-sm rounded-full bg-slate-700 flex justify-center items-center">
-            0
+            {tasks.length}
           </div>
           {!editMode && column.title}
           {editMode && (
