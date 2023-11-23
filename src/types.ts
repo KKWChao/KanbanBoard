@@ -11,11 +11,14 @@ export type Task = {
   content: string;
 };
 
-/* Column Helper Props */
-export type DeleteColumn = {
+export type ColumnProps = {
   id: Id;
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-  tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  title: string;
+};
+
+export type TaskProps = {
+  id: Id;
+  title: string;
+  sub: string;
+  vote: number;
 };

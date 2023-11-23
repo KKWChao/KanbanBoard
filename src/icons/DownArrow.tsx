@@ -1,10 +1,10 @@
 import React from "react";
 
-type PlusIconProps = {
+type DownArrowIconProps = {
   className?: string;
 };
 
-const PlusIcon: React.FC<PlusIconProps> = ({ className = "w-6 h-6" }) => {
+const DownArrow: React.FC<DownArrowIconProps> = ({ className = "w-6 h-6" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,15 +12,15 @@ const PlusIcon: React.FC<PlusIconProps> = ({ className = "w-6 h-6" }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`${className}`}
+      className={className}
     >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
       />
     </svg>
   );
 };
 
-export default PlusIcon;
+export default DownArrow;

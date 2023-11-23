@@ -1,10 +1,10 @@
 import React from "react";
 
-type PlusIconProps = {
+type OptionsIconProps = {
   className?: string;
 };
 
-const PlusIcon: React.FC<PlusIconProps> = ({ className = "w-6 h-6" }) => {
+const OptionsIcon: React.FC<OptionsIconProps> = ({ className = "w-6 h-6" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,15 +12,15 @@ const PlusIcon: React.FC<PlusIconProps> = ({ className = "w-6 h-6" }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`${className}`}
+      className={className}
     >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
       />
     </svg>
   );
 };
 
-export default PlusIcon;
+export default OptionsIcon;
