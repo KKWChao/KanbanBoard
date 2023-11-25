@@ -1,4 +1,4 @@
-import { Column, Id, Task } from "@/types";
+import { Column, Id, Task } from "@/utils/types";
 import { generateId } from "./generateId";
 
 export function createNewColumn(

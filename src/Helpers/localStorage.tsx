@@ -1,4 +1,4 @@
-import { Column, Task } from "@/types";
+import { Column, Task } from "@/utils/types";
 
 export function savingLocal(
   columns: Column[],
