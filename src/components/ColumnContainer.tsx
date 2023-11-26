@@ -3,6 +3,7 @@ import TaskCard from "./TaskCard";
 import React, { useState } from "react";
 import PlusIcon from "@/icons/PlusIcon";
 import { CreateTask } from "@/helpers/taskHelper";
+import { tasks as initialTasks } from "@/utils/tempData";
 
 type Props = {
   columnData: number;
@@ -11,6 +12,18 @@ type Props = {
 
 const ColumnContainer = (props: Props) => {
   let title = "";
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+
+  // ISSUE: Not updating after calling function
+  const updateTaskVotes = (task: Task, vote: number) => {
+    const updatedTask = tasks.map((t) => {
+      console.log(vote);
+      return t.id === task.id ? { ...t, vote } : t;
+    });
+    setTasks(updatedTask);
+    console.log(updatedTask);
+  };
+
   switch (props.columnData) {
     case 1:
       title = "Todo";
@@ -23,8 +36,6 @@ const ColumnContainer = (props: Props) => {
       break;
   }
 
-  const [tasks, setTasks] = useState();
-
   return (
     <div className="h-fit flex flex-col gap-2 bg-slate-900 rounded border-2 border-slate-800">
       {/* Column Title */}
@@ -33,7 +44,7 @@ const ColumnContainer = (props: Props) => {
       <div className="my-2 mx-8 flex flex-grow flex-col gap-4">
         {props.taskData?.map((task) => (
           <React.Fragment key={task.id}>
-            <TaskCard task={task} />
+            <TaskCard task={task} updateTaskVotes={updateTaskVotes} />
           </React.Fragment>
         ))}
       </div>

@@ -1,17 +1,13 @@
 import DownArrow from "@/icons/DownArrow";
 import UpArrow from "@/icons/UpArrow";
 import { Task } from "@/utils/types";
-import { useState } from "react";
 
 type Props = {
   task: Task;
+  updateTaskVotes: (task: Task, votes: number) => void;
 };
 
-const TaskCard = ({ task }: Props) => {
-  const [taskTitle, setTaskTitle] = useState<string>(task.title);
-  const [taskSubTitle, setTaskSubTitle] = useState<string>(task.sub);
-  const [taskVotes, setTaskVotes] = useState<number>(task.vote);
-
+const TaskCard = ({ task, updateTaskVotes }: Props) => {
   return (
     <div className="p-2 bg-slate-700 rounded flex justify-between border-slate-900 border-4 cursor-grab shadow-md">
       {/* Title */}
@@ -20,8 +16,7 @@ const TaskCard = ({ task }: Props) => {
           <input
             className="p-2 bg-slate-700 focus:bg-slate-800"
             type="text"
-            placeholder={taskTitle}
-            onChange={(event) => setTaskTitle(event.target.value)}
+            placeholder={task.title}
           />
         </h3>
         <p className="px-2 py-2 text-sm">
@@ -33,20 +28,26 @@ const TaskCard = ({ task }: Props) => {
           <input
             className="bg-slate-700 focus:bg-slate-800 text-rose-500 placeholder:text-rose-500"
             type="text"
-            placeholder={taskSubTitle}
-            onChange={(event) => setTaskSubTitle(event.target.value)}
+            placeholder={task.sub}
           />
         </p>
       </div>
 
       {/* Votes w/ buttons */}
       <div className="p-2 flex flex-col items-center justify-center gap-2">
-        <button onClick={() => setTaskVotes(taskVotes + 1)}>
+        <button
+          className="hover:scale-125 active:text-rose-500"
+          onClick={() => updateTaskVotes(task, task.vote + 1)}
+        >
           <UpArrow />
         </button>
-        <p className="text-rose-500">{taskVotes}</p>
-
-        <button onClick={() => setTaskVotes(taskVotes - 1)}>
+        <p className="font-bold text-rose-500">{task.vote}</p>
+        <button
+          className="hover:scale-125 active:text-rose-500"
+          onClick={() => {
+            updateTaskVotes(task, task.vote - 1);
+          }}
+        >
           <DownArrow />
         </button>
       </div>
