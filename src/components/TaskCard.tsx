@@ -1,13 +1,15 @@
-import DownArrow from "@/icons/DownArrow";
-import UpArrow from "@/icons/UpArrow";
+import DownArrow from "@/icons/DownArrowIcon";
+import TrashIcon from "@/icons/TrashIcon";
+import UpArrow from "@/icons/UpArrowIcon";
 import { Task } from "@/utils/types";
 
 type Props = {
   task: Task;
   updateTaskVotes: (task: Task, votes: number) => void;
+  deleteTask: (targetTaskId: number) => void;
 };
 
-const TaskCard = ({ task, updateTaskVotes }: Props) => {
+const TaskCard = ({ task, updateTaskVotes, deleteTask }: Props) => {
   return (
     <div className="p-2 bg-slate-700 rounded flex justify-between border-slate-900 border-4 cursor-grab shadow-md">
       {/* Title */}
@@ -19,14 +21,26 @@ const TaskCard = ({ task, updateTaskVotes }: Props) => {
             placeholder={task.title}
           />
         </h3>
-        <p className="px-2 py-2 text-sm">
+
+        <p className="relative px-2 py-2 flex items-center gap-2">
           {/* Priority */}
-          <span className="px-2 text-lg font-bold">
+          <span className="font-bold mb-1">
             [&nbsp;{task.priority.toUpperCase()}&nbsp;]
           </span>
+
+          {/* Options Button */}
+          {/* Issue with id type? */}
+          <button
+            className="hover:stroke-slate-300 stroke-slate-100"
+            onClick={() => {
+              deleteTask(task.id);
+            }}
+          >
+            <TrashIcon className="w-4 h-4" />
+          </button>
           {/* Sub Title */}
           <input
-            className="bg-slate-700 focus:bg-slate-800 text-rose-500 placeholder:text-rose-500"
+            className="text-sm w-auto bg-slate-700 focus:bg-slate-800 text-rose-500 placeholder:text-rose-500"
             type="text"
             placeholder={task.sub}
           />

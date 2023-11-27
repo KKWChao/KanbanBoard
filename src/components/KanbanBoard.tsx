@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { statuses, tasks as initialTasks } from "../utils/tempData";
-import { Task } from "@/utils/types";
+import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
+import { generateId } from "@/helpers/generateId";
 
 const KanbanBoard = () => {
-  let title = "";
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const columns = statuses.map((status) => {
@@ -16,6 +16,18 @@ const KanbanBoard = () => {
     };
   });
 
+  const addTask = (column: Status) => {
+    const newTask: Task = {
+      id: generateId(),
+      status: column,
+      priority: "~",
+      title: "New Task",
+      sub: "",
+      vote: 0,
+    };
+    setTasks([...tasks, newTask]);
+  };
+
   const updateTaskVotes = (task: Task, vote: number) => {
     const updatedTask = tasks.map((t) => {
       return t.id === task.id ? { ...t, vote } : t;
@@ -23,11 +35,17 @@ const KanbanBoard = () => {
     setTasks(updatedTask);
   };
 
-  const deleteTask = (task: Task) => {};
+  const deleteTask = (targetTaskId: Id) => {
+    /* Issue with ID Type in delete task */
+    const updatedTasks = tasks.filter((task) => {
+      return task.id !== targetTaskId && { ...task };
+    });
+    setTasks(updatedTasks);
+  };
 
   return (
     <article className="max-h-[95dvh] p-12">
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-8">
         {/* Columns */}
         {columns.map((column) => (
           <section
@@ -44,14 +62,20 @@ const KanbanBoard = () => {
             <div className="my-2 mx-8 flex flex-grow flex-col gap-4">
               {column.tasks?.map((task) => (
                 <React.Fragment key={task.id}>
-                  <TaskCard task={task} updateTaskVotes={updateTaskVotes} />
+                  <TaskCard
+                    task={task}
+                    updateTaskVotes={updateTaskVotes}
+                    deleteTask={deleteTask}
+                  />
                 </React.Fragment>
               ))}
             </div>
             {/* Column Add Task */}
             <button
               className="p-2 flex items-center justify-center rounded-b hover:bg-slate-700 active:bg-slate-800"
-              onClick={() => {}}
+              onClick={() => {
+                addTask(column.status);
+              }}
             >
               <PlusIcon className="w-8 h-8" />
             </button>

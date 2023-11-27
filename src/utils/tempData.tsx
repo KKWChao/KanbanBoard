@@ -6,7 +6,6 @@ export const statuses: Status[] = [1, 2, 3];
 export const tasks: Task[] = [
   {
     id: generateId(),
-    boardId: generateId(),
     status: 1,
     priority: "~",
     title: "Card Title Dummy",
@@ -15,7 +14,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 1,
     priority: "!",
     title: "Card Progress Dummy",
@@ -24,7 +22,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 3,
     priority: "!!!",
     title: "Card Complete Dummy",
@@ -33,7 +30,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 2,
     priority: "!",
     title: "Card Title Dummy",
@@ -42,7 +38,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 1,
     priority: "~",
     title: "Card Progress Dummy",
@@ -51,7 +46,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 1,
     priority: "~",
     title: "Card Complete Dummy",
@@ -60,7 +54,6 @@ export const tasks: Task[] = [
   },
   {
     id: generateId(),
-    boardId: generateId(),
     status: 1,
     priority: "!!!",
     title: "Card Complete Dummy",
