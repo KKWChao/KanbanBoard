@@ -36,7 +36,7 @@ const TaskCard = ({
         <div className="relative flex">
           {/* Sub Title */}
           <input
-            className="text-sm w-1/6 bg-slate-700 focus:bg-slate-800 text-rose-500 placeholder:text-rose-500"
+            className="text-sm pl-2 w-1/6 bg-slate-700 focus:bg-slate-800 text-rose-500 placeholder:text-rose-500"
             type="text"
             placeholder={task.sub}
           />
