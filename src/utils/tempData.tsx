@@ -1,7 +1,9 @@
 import { generateId } from "@/helpers/generateId";
-import { Status, Task } from "./types";
+import { Priority, Status, Task } from "./types";
 
 export const statuses: Status[] = [1, 2, 3];
+
+export const priorties: Priority[] = ["!!!", "!", "~"];
 
 export const tasks: Task[] = [
   {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { statuses, tasks as initialTasks } from "../utils/tempData";
-import { Id, Status, Task } from "@/utils/types";
+import { Id, Priority, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
 import { generateId } from "@/helpers/generateId";
@@ -27,20 +27,27 @@ const KanbanBoard = () => {
     };
     setTasks([...tasks, newTask]);
   };
-
-  const updateTaskVotes = (task: Task, vote: number) => {
-    const updatedTask = tasks.map((t) => {
-      return t.id === task.id ? { ...t, vote } : t;
+  const deleteTask = (targetTaskId: Id) => {
+    /* Issue with ID Type in delete task */
+    const updatedTask = tasks.filter((task) => {
+      return task.id !== targetTaskId && { ...task };
     });
     setTasks(updatedTask);
   };
 
-  const deleteTask = (targetTaskId: Id) => {
-    /* Issue with ID Type in delete task */
-    const updatedTasks = tasks.filter((task) => {
-      return task.id !== targetTaskId && { ...task };
+  const updateTaskPriority = (task: Task, priority: Priority) => {
+    const updatedTask = tasks.map((t) => {
+      return t.id === task.id ? { ...t, priority } : t;
     });
-    setTasks(updatedTasks);
+    setTasks(updatedTask);
+  };
+
+  const updateTaskVotes = (task: Task, vote: number) => {
+    if (vote < 0) return;
+    const updatedTask = tasks.map((t) => {
+      return t.id === task.id ? { ...t, vote } : t;
+    });
+    setTasks(updatedTask);
   };
 
   return (
@@ -66,6 +73,7 @@ const KanbanBoard = () => {
                     task={task}
                     updateTaskVotes={updateTaskVotes}
                     deleteTask={deleteTask}
+                    updateTaskPriority={updateTaskPriority}
                   />
                 </React.Fragment>
               ))}
