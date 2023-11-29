@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { statuses, tasks as initialTasks } from "../utils/tempData";
-import { Id, Priority, Status, Task } from "@/utils/types";
+import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
 import { generateId } from "@/helpers/generateId";
@@ -27,6 +27,7 @@ const KanbanBoard = () => {
     };
     setTasks([...tasks, newTask]);
   };
+
   const deleteTask = (targetTaskId: Id) => {
     /* Issue with ID Type in delete task */
     const updatedTask = tasks.filter((task) => {
@@ -35,17 +36,9 @@ const KanbanBoard = () => {
     setTasks(updatedTask);
   };
 
-  const updateTaskPriority = (task: Task, priority: Priority) => {
-    const updatedTask = tasks.map((t) => {
-      return t.id === task.id ? { ...t, priority } : t;
-    });
-    setTasks(updatedTask);
-  };
-
-  const updateTaskVotes = (task: Task, vote: number) => {
-    if (vote < 0) return;
-    const updatedTask = tasks.map((t) => {
-      return t.id === task.id ? { ...t, vote } : t;
+  const updateTask = (task: Task) => {
+    const updatedTask = tasks.map((targetTask) => {
+      return targetTask.id === task.id ? task : targetTask;
     });
     setTasks(updatedTask);
   };
@@ -71,9 +64,8 @@ const KanbanBoard = () => {
                 <React.Fragment key={task.id}>
                   <TaskCard
                     task={task}
-                    updateTaskVotes={updateTaskVotes}
+                    updateTask={updateTask}
                     deleteTask={deleteTask}
-                    updateTaskPriority={updateTaskPriority}
                   />
                 </React.Fragment>
               ))}
