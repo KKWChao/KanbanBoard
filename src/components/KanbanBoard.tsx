@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { statuses, tasks as initialTasks } from "../utils/tempData";
+import React, { useEffect, useState } from "react";
+import { statuses } from "../utils/tempData";
 import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
 import { generateId } from "@/helpers/generateId";
 
 const KanbanBoard = () => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [hoverTask, setHoverTask] = useState<Status | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/tasks")
+      .then((res) => res.json())
+      .then((data) => setTasks(data));
+  }, []);
 
   const columns = statuses.map((status) => {
     const tasksInColumns = tasks.filter((task) => task.status === status);
@@ -37,10 +44,33 @@ const KanbanBoard = () => {
   };
 
   const updateTask = (task: Task) => {
+    fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+
     const updatedTask = tasks.map((targetTask) => {
       return targetTask.id === task.id ? task : targetTask;
     });
     setTasks(updatedTask);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLElement>, status: Status) => {
+    event.preventDefault();
+    setHoverTask(null);
+    const id = event.dataTransfer.getData("id");
+    const task = tasks.find((task) => task.id === id);
+
+    if (task) {
+      updateTask({ ...task, status });
+    }
+  };
+
+  const handleDragEnter = (status: Status) => {
+    setHoverTask(status);
   };
 
   return (
@@ -49,8 +79,17 @@ const KanbanBoard = () => {
         {/* Columns */}
         {columns.map((column) => (
           <section
-            className="h-fit flex flex-col gap-2 bg-slate-900 rounded border-2 border-slate-800"
+            className={`h-fit flex flex-col gap-2  rounded border-2 border-slate-800 ${
+              hoverTask === column.status ? "bg-slate-800" : "bg-slate-900"
+            }`}
             key={column.status}
+            onDrop={(event) => {
+              handleDrop(event, column.status);
+            }}
+            onDragOver={(event) => event.preventDefault()}
+            onDragEnter={() => {
+              handleDragEnter(column.status);
+            }}
           >
             {/* Column Title */}
             <h2 className="p-4 text-3xl text-center">

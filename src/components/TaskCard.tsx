@@ -7,7 +7,7 @@ import { useState } from "react";
 
 type Props = {
   task: Task;
-  deleteTask: (targetTaskId: number) => void;
+  deleteTask: (targetTaskId: string) => void;
   updateTask: (task: Task) => void;
 };
 
@@ -15,11 +15,17 @@ const TaskCard = ({ task, deleteTask, updateTask }: Props) => {
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
   const [isEditingSubTitle, setIsEditingSubTitle] = useState<boolean>(false);
   const [priorityDropDown, setPriorityDropDown] = useState<boolean>(false);
-
-  const subTitleValidation = (subTitle: string) => {};
+  /* Need to figure out sub title string validation */
+  // const subTitleValidation = (subTitle: string) => {};
 
   return (
-    <div className="p-2 bg-slate-700 rounded flex justify-between border-slate-900 border-4 cursor-grab shadow-md">
+    <div
+      draggable
+      onDragStart={(event) => {
+        event.dataTransfer.setData("id", task.id);
+      }}
+      className="p-2 bg-slate-700 rounded flex justify-between border-slate-900 border-4 cursor-grab shadow-md"
+    >
       <div className="p-2 w-full flex flex-col justify-between">
         {/* Editing */}
         <div className="rounded text-lg ">
