@@ -4,15 +4,23 @@ import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
 import { generateId } from "@/helpers/generateId";
+import axios from "axios";
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [hoverTask, setHoverTask] = useState<Status | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tasks")
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    const fetchData = async () => {
+      try {
+        fetch("http://localhost:3000/tasks")
+          .then((res) => res.json())
+          .then((data) => setTasks(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   const columns = statuses.map((status) => {
@@ -23,28 +31,34 @@ const KanbanBoard = () => {
     };
   });
 
-  const addTask = (column: Status) => {
-    const newTask: Task = {
+  const addTask = async (column: Status) => {
+    await axios.post("http://localhost:3000/tasks", {
       id: generateId(),
       status: column,
       priority: "~",
       title: "New Task",
       sub: "",
       vote: 0,
-    };
-    setTasks([...tasks, newTask]);
-  };
-
-  const deleteTask = (targetTaskId: Id) => {
-    /* Issue with ID Type in delete task */
-    const updatedTask = tasks.filter((task) => {
-      return task.id !== targetTaskId && { ...task };
     });
-    setTasks(updatedTask);
   };
 
-  const updateTask = (task: Task) => {
-    fetch(`http://localhost:3000/tasks/${task.id}`, {
+  const deleteTask = async (targetTaskId: Id) => {
+    try {
+      await axios
+        .delete(`http://localhost:3000/tasks/${targetTaskId}`)
+        .then((res) => console.log(`Item Deleted: ${res}`));
+
+      const updatedTask = tasks.filter((task) => {
+        return task.id !== targetTaskId && { ...task };
+      });
+      setTasks(updatedTask);
+    } catch (error) {
+      console.log(`Delete Error: ${error}`);
+    }
+  };
+
+  const updateTask = async (task: Task) => {
+    await fetch(`http://localhost:3000/tasks/${task.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

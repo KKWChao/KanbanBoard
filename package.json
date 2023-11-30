@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.16",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
     "framer-motion": "^10.16.5",
     "path": "^0.12.7",
     "postcss": "^8.4.31",
