@@ -13,6 +13,10 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // await axios
+        //   .get(`http://localhost:3000/tasks`)
+        //   .then((data) => setTasks(data));
+
         fetch("http://localhost:3000/tasks")
           .then((res) => res.json())
           .then((data) => setTasks(data));
@@ -32,14 +36,20 @@ const KanbanBoard = () => {
   });
 
   const addTask = async (column: Status) => {
-    await axios.post("http://localhost:3000/tasks", {
-      id: generateId(),
-      status: column,
-      priority: "~",
-      title: "New Task",
-      sub: "",
-      vote: 0,
-    });
+    try {
+      const newTask = await axios.post("http://localhost:3000/tasks", {
+        id: generateId(),
+        status: column,
+        priority: "~",
+        title: "New Task",
+        sub: "???-?",
+        vote: 0,
+      });
+
+      setTasks([...tasks, newTask.data]);
+    } catch (error) {
+      console.log(`Error Adding Task: ${error}`);
+    }
   };
 
   const deleteTask = async (targetTaskId: Id) => {
@@ -58,18 +68,18 @@ const KanbanBoard = () => {
   };
 
   const updateTask = async (task: Task) => {
-    await fetch(`http://localhost:3000/tasks/${task.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
+    try {
+      await axios.put(`http://localhost:3000/tasks/${task.id}`, task, {
+        headers: { "Content-Type": "application/json" },
+      });
+      const updatedTask = tasks.map((targetTask) => {
+        return targetTask.id === task.id ? task : targetTask;
+      });
 
-    const updatedTask = tasks.map((targetTask) => {
-      return targetTask.id === task.id ? task : targetTask;
-    });
-    setTasks(updatedTask);
+      setTasks(updatedTask);
+    } catch (error) {
+      console.error(`Update Error: ${error}`);
+    }
   };
 
   const handleDrop = (event: React.DragEvent<HTMLElement>, status: Status) => {
@@ -81,10 +91,6 @@ const KanbanBoard = () => {
     if (task) {
       updateTask({ ...task, status });
     }
-  };
-
-  const handleDragEnter = (status: Status) => {
-    setHoverTask(status);
   };
 
   return (
@@ -102,7 +108,7 @@ const KanbanBoard = () => {
             }}
             onDragOver={(event) => event.preventDefault()}
             onDragEnter={() => {
-              handleDragEnter(column.status);
+              setHoverTask(column.status);
             }}
           >
             {/* Column Title */}

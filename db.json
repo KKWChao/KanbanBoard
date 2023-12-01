@@ -1,75 +1,27 @@
 {
   "tasks": [
     {
-      "id": "cb24db26-fe50-4622-b2d6-cf86f9d89dad",
-      "status": 1,
-      "priority": "~",
-      "title": "Card Title",
-      "sub": "SOM-1",
-      "vote": 4
-    },
-    {
-      "id": "ae8e1da0-df39-4360-b6f7-4bf2ac925589",
-      "status": 2,
-      "priority": "!",
-      "title": "Card Progress",
-      "sub": "SOM-2",
-      "vote": 4
-    },
-    {
-      "id": "7bde70b4-4d66-45d8-bb8b-d564b370d6bc",
-      "status": 3,
-      "priority": "!!!",
-      "title": "Card Complete",
-      "sub": "SOM-3",
-      "vote": 4
-    },
-    {
-      "id": "2d452241-50f4-457c-99e5-d509c392adc8",
-      "status": 1,
-      "priority": "!",
-      "title": "Card Title",
-      "sub": "SOM-1",
-      "vote": 4
-    },
-    {
-      "id": "d9d7dbd3-510b-46dd-92a8-5f02f6c899d0",
-      "status": 1,
-      "priority": "~",
-      "title": "Card Progress",
-      "sub": "SOM-2",
-      "vote": 4
-    },
-    {
-      "id": "adf6ac39-56e9-4ed5-93d7-d6c590dce6ad",
-      "status": 1,
-      "priority": "~",
-      "title": "Card Complete",
-      "sub": "SOM-3",
-      "vote": 4
-    },
-    {
-      "id": "b76956a1-736c-45dd-93b0-b0b5dab62e59",
-      "status": 1,
-      "priority": "!!!",
-      "title": "Cart Test",
-      "sub": "SOM-3",
-      "vote": 4
-    },
-    {
-      "id": "6bff0070-06b0-40ab-81ca-5b599db1202a",
+      "id": "a6616795-a067-4dad-82c6-adf6459ae078",
       "status": 1,
       "priority": "~",
       "title": "New Task",
-      "sub": "",
+      "sub": "???-?",
       "vote": 0
     },
     {
-      "id": "775ad214-5ae5-4a27-93ed-732212f83e87",
+      "id": "e2498d50-883e-4887-b9f6-b7760d182d97",
       "status": 1,
       "priority": "~",
       "title": "New Task",
-      "sub": "",
+      "sub": "???-?",
+      "vote": 0
+    },
+    {
+      "id": "c23f7446-f72f-4db1-8985-2b142ad3ef62",
+      "status": 2,
+      "priority": "~",
+      "title": "New Task",
+      "sub": "???-?",
       "vote": 0
     }
   ]
