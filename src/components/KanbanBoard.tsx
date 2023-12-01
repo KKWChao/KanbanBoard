@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { statuses } from "../utils/tempData";
+import { priorties, statuses } from "@/utils/tempData";
 import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
 import { generateId } from "@/helpers/generateId";
-import axios from "axios";
+import { ClipLoader } from "react-spinners";
+import {
+  getApiTask,
+  addApiTask,
+  updateApiTask,
+  deleteApiTask,
+} from "@/api/taskApi";
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [hoverTask, setHoverTask] = useState<Status | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // await axios
-        //   .get(`http://localhost:3000/tasks`)
-        //   .then((data) => setTasks(data));
-
-        fetch("http://localhost:3000/tasks")
-          .then((res) => res.json())
-          .then((data) => setTasks(data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    setIsLoading(true);
+    try {
+      getApiTask().then((res) => setTasks(res.data));
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(true);
+      console.error(`[Kanban Error] - Getting Tasks: ${error}`);
+      throw error;
+    }
   }, []);
 
   const columns = statuses.map((status) => {
@@ -37,48 +39,50 @@ const KanbanBoard = () => {
 
   const addTask = async (column: Status) => {
     try {
-      const newTask = await axios.post("http://localhost:3000/tasks", {
+      const newTask = {
         id: generateId(),
         status: column,
-        priority: "~",
+        priority: priorties[0],
         title: "New Task",
         sub: "???-?",
         vote: 0,
-      });
+      };
 
-      setTasks([...tasks, newTask.data]);
+      await addApiTask(newTask);
+
+      setTasks([...tasks, newTask]);
     } catch (error) {
-      console.log(`Error Adding Task: ${error}`);
+      console.error(`[Kanban Error] - Adding Task: ${error}`);
+      throw error;
     }
   };
 
   const deleteTask = async (targetTaskId: Id) => {
     try {
-      await axios
-        .delete(`http://localhost:3000/tasks/${targetTaskId}`)
-        .then((res) => console.log(`Item Deleted: ${res}`));
+      await deleteApiTask(targetTaskId);
 
       const updatedTask = tasks.filter((task) => {
         return task.id !== targetTaskId && { ...task };
       });
+
       setTasks(updatedTask);
     } catch (error) {
-      console.log(`Delete Error: ${error}`);
+      console.error(`[Kanban Error] - Deleting Task: ${error}`);
+      throw error;
     }
   };
 
   const updateTask = async (task: Task) => {
     try {
-      await axios.put(`http://localhost:3000/tasks/${task.id}`, task, {
-        headers: { "Content-Type": "application/json" },
-      });
+      await updateApiTask(task.id, task);
+
       const updatedTask = tasks.map((targetTask) => {
         return targetTask.id === task.id ? task : targetTask;
       });
 
       setTasks(updatedTask);
     } catch (error) {
-      console.error(`Update Error: ${error}`);
+      console.error(`[Kanban Error] - Updating Task: ${error}`);
     }
   };
 
@@ -119,6 +123,19 @@ const KanbanBoard = () => {
             </h2>
             {/* Task Container */}
             <div className="my-2 mx-8 flex flex-grow flex-col gap-4">
+              {/* Loader */}
+              {isLoading && (
+                <div className="w-full py-2 flex items-center justify-center">
+                  <ClipLoader
+                    color="red"
+                    loading={isLoading}
+                    size={40}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              )}
+              {/* Tasks */}
               {column.tasks?.map((task) => (
                 <React.Fragment key={task.id}>
                   <TaskCard

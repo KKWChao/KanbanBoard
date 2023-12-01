@@ -1,25 +1,25 @@
 {
   "tasks": [
     {
-      "id": "a6616795-a067-4dad-82c6-adf6459ae078",
-      "status": 1,
-      "priority": "~",
-      "title": "New Task",
-      "sub": "???-?",
-      "vote": 0
-    },
-    {
-      "id": "e2498d50-883e-4887-b9f6-b7760d182d97",
-      "status": 1,
-      "priority": "~",
-      "title": "New Task",
-      "sub": "???-?",
-      "vote": 0
-    },
-    {
       "id": "c23f7446-f72f-4db1-8985-2b142ad3ef62",
-      "status": 2,
+      "status": 1,
       "priority": "~",
+      "title": "New Task3",
+      "sub": "???-?",
+      "vote": 0
+    },
+    {
+      "id": "d3184fd9-aa8d-479f-a8cd-0e904b55cdd2",
+      "status": 3,
+      "priority": "!!!",
+      "title": "New Task",
+      "sub": "???-?",
+      "vote": 0
+    },
+    {
+      "id": "ea2d4c75-b246-46c4-b3bf-e203376af2fc",
+      "status": 1,
+      "priority": "!!!",
       "title": "New Task",
       "sub": "???-?",
       "vote": 0

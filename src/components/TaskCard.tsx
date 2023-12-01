@@ -45,19 +45,11 @@ const TaskCard = ({ task, deleteTask, updateTask }: Props) => {
         </div>
 
         {/* Title */}
-        {/* <h3 className="text-2xl" onClick={() => {}}>
-          <input
-            className="p-2 w-auto bg-slate-700 focus:bg-slate-800 placeholder:text-slate-100"
-            type="text"
-            placeholder={task.title}
-          />
-        </h3> */}
-
-        <div className="relative flex">
+        <div className="relative flex gap-1">
           {/* Sub Title */}
           {isEditingSubTitle ? (
             <input
-              className="text-sm px-2 w-[4rem] text-rose-600 bg-slate-700 focus:ring-2 focus:ring-rose-500 focus:rounded-md focus:outline-none"
+              className="text-sm px-2 mt-1 w-[4rem] text-rose-600 bg-slate-700 focus:ring-2 focus:ring-rose-500 focus:rounded-md focus:outline-none focus:border-none"
               type="text"
               value={task.sub}
               onBlur={() => setIsEditingTitle(false)}
@@ -67,28 +59,21 @@ const TaskCard = ({ task, deleteTask, updateTask }: Props) => {
             />
           ) : (
             <div
-              className="text-sm px-2 w-[4rem] flex items-center text-rose-600"
+              className="text-sm px-2 mt-1 w-[4rem] flex items-center text-rose-600 focus:ring-none"
               onClick={() => setIsEditingSubTitle(true)}
             >
               {task.sub}
             </div>
           )}
 
-          {/* <input
-            className="text-sm px-2 w-[4rem] text-rose-600 bg-slate-700 focus:ring-rose-500 focus:rounded-md focus:outline-none"
-            type="text"
-            value={task.sub ? task.sub.toUpperCase() : "TMP-?"}
-            onChange={(event) =>
-              updateTask({ ...task, sub: event.target.value })
-            }
-          /> */}
           {/* Priority */}
           <button
-            className="relative w-[3.5rem] font-bold  hover:text-slate-200 hover:bg-slate-800 border border-slate-700"
+            className="relative w-[3rem] font-bold  hover:text-slate-200 hover:bg-slate-800 border border-slate-700"
             onClick={() => setPriorityDropDown(!priorityDropDown)}
             onBlur={() => setPriorityDropDown(false)}
           >
-            [&nbsp;{task.priority}&nbsp;]
+            <span className="mb-1">[&nbsp;{task.priority}&nbsp;]</span>
+
             {/* Dropdown for priority */}
             {priorityDropDown && (
               <ul className="absolute top-9 w-full bg-slate-800 flex flex-col rounded text-center border border-slate-700">
@@ -113,7 +98,6 @@ const TaskCard = ({ task, deleteTask, updateTask }: Props) => {
             )}
           </button>
           {/* Options Button */}
-          {/* Issue with id type? */}
           <button
             className="hover:stroke-slate-300 stroke-slate-100 p-2"
             onClick={() => {
