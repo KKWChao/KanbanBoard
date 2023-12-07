@@ -20,7 +20,9 @@ const KanbanBoard = () => {
   useEffect(() => {
     setIsLoading(true);
     try {
-      getApiTask().then((res) => setTasks(res.data));
+      getApiTask().then((res) => {
+        setTasks(res.data.data);
+      });
       setIsLoading(false);
     } catch (error) {
       setIsLoading(true);
