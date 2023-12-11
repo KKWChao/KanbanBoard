@@ -57,4 +57,4 @@ Additional notes on how to deploy this on a live or release system. Explaining t
 
 ## Additional Documentation and Acknowledgments
 
-- Backend Server: KanbanBoardBackend
+- Backend Server: [KanbanBoardBackend](https://github.com/KKWChao/KanbanBoardBackend)

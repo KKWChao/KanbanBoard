@@ -43,6 +43,8 @@ const KanbanBoard = () => {
     try {
       const newTask = {
         id: generateId(),
+        /* ADDED TEMP USER ID (REMOVE AFTER FINISHING) */
+        userId: "72916e17-6458-48b3-9ac2-b61836bbd2d1",
         status: column,
         priority: priorties[0],
         title: "New Task",

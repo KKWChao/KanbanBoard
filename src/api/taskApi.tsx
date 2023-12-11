@@ -1,8 +1,9 @@
 import { Id, Task } from "@/utils/types";
 import axios from "axios";
 
+// temp to test connections
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:3333/api",
   headers: {
     "Content-Type": "application/json",
   },
