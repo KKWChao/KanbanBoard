@@ -17,3 +17,8 @@ export type Board = {
   id: Id;
   title: string;
 };
+
+export type Login = {
+  email: string;
+  password: string;
+};

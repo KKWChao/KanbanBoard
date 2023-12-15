@@ -3,7 +3,7 @@ import { priorties, statuses } from "@/utils/tempData";
 import { Id, Status, Task } from "@/utils/types";
 import TaskCard from "./TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
-import { generateId } from "@/helpers/generateId";
+
 import { ClipLoader } from "react-spinners";
 import {
   getApiTask,
@@ -11,6 +11,7 @@ import {
   updateApiTask,
   deleteApiTask,
 } from "@/api/taskApi";
+import { generateId } from "@/Helpers/generateId";
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
