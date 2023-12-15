@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+## Built With
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Typescript
+- TailwindCSS
 
-Currently, two official plugins are available:
+# Kanban Board
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A Kanban board with storage features
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-- Configure the top-level `parserOptions` property like this:
+<!-- ### Prerequisites
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+The things you need before installing the software.
+
+- You need this
+- And you need this
+- Oh, and don't forget this -->
+
+### Installation
+
+A step by step guide that will tell you how to get the development environment up and running.
+
+```
+git clone https://github.com/KKWChao/KanbanBoard.git
+cd KanbanBoard
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<!-- ## Usage
+
+A few examples of useful commands and/or tasks.
+
+```
+$ First example
+$ Second example
+$ And keep this in mind
+``` -->
+
+<!-- ## Deployment
+
+Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special). -->
+
+### Server
+
+- Live:
+- Release:
+- Development:
+
+### Branches
+
+- main
+- mainv2: changed to v2 and merged with main
+
+## Additional Documentation and Acknowledgments
+
+- Backend Server: [KanbanBoardBackend](https://github.com/KKWChao/KanbanBoardBackend)

@@ -1,8 +1,13 @@
 import { Id, Task } from "@/utils/types";
 import axios from "axios";
 
+// temp to test connections
 const api = axios.create({
+<<<<<<< HEAD
   baseURL: "http://localhost:3333",
+=======
+  baseURL: "http://localhost:3333/api",
+>>>>>>> c01372c01f8b45acf90429564939a62ec66ae228
   headers: {
     "Content-Type": "application/json",
   },
@@ -17,6 +22,15 @@ export const getApiTask = async () => {
   }
 };
 
+// export const getApiTask = async () => {
+//   try {
+//     return await api.get(`/tasks`);
+//   } catch (error) {
+//     console.error(`[Api Error] - Fetching Tasks: ${error}`);
+//     throw error;
+//   }
+// };
+
 export const addApiTask = async (taskData: Task) => {
   try {
     return await api.post(`/tasks`, taskData);
@@ -29,6 +43,15 @@ export const addApiTask = async (taskData: Task) => {
 export const updateApiTask = async (taskId: Id, taskData: Task) => {
   try {
     return await api.put(`/tasks/${taskId}`, taskData);
+  } catch (error) {
+    console.error(`[Api Error] - Updating Task: ${error}`);
+    throw error;
+  }
+};
+
+export const updateSmallApiTask = async (taskId: Id, taskData: Task) => {
+  try {
+    return await api.patch(`/tasks/${taskId}`, taskData);
   } catch (error) {
     console.error(`[Api Error] - Updating Task: ${error}`);
     throw error;
