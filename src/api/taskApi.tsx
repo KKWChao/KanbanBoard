@@ -3,11 +3,7 @@ import axios from "axios";
 
 // temp to test connections
 const api = axios.create({
-<<<<<<< HEAD
-  baseURL: "http://localhost:3333",
-=======
   baseURL: "http://localhost:3333/api",
->>>>>>> c01372c01f8b45acf90429564939a62ec66ae228
   headers: {
     "Content-Type": "application/json",
   },

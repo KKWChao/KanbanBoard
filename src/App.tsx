@@ -1,19 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import KanbanBoard from "./components/KanbanBoard";
-import { useState } from "react";
 import Login from "./components/Login";
+import { AuthProvider, useAuth } from "./context/authContext";
 
 function App() {
-  const [login, setLogin] = useState<boolean>(true);
-
+  const { token } = useAuth();
   return (
-    <React.Fragment>
-      <Navbar />
-      {/* <KanbanBoard /> */}
-      {login && <Login />}
-      {!login && <KanbanBoard />}
-    </React.Fragment>
+    <AuthProvider>
+      <React.Fragment>
+        <Navbar />
+        {token ? <KanbanBoard /> : <Login />}
+      </React.Fragment>
+    </AuthProvider>
   );
 }
 
