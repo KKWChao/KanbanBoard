@@ -11,7 +11,7 @@ const Login = () => {
 
     try {
       loginApi({ email: formEmail, password: formPassword }).then((res) =>
-        console.log(res?.data.token)
+        localStorage.setItem("token", res?.data.token)
       );
       console.log("Success");
     } catch (err) {
