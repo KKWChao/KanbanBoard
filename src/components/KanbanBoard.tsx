@@ -33,7 +33,7 @@ const KanbanBoard = () => {
   }, []);
 
   const columns = statuses.map((status) => {
-    const tasksInColumns = tasks.filter((task) => task.status === status);
+    const tasksInColumns = tasks?.filter((task) => task.status === status);
     return {
       status,
       tasks: tasksInColumns,
