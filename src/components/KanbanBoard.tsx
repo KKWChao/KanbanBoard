@@ -23,6 +23,7 @@ const KanbanBoard = () => {
     try {
       getApiTask().then((res) => {
         setTasks(res.data.data);
+        console.log(tasks);
       });
       setIsLoading(false);
     } catch (error) {

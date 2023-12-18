@@ -1,11 +1,14 @@
 import { Id, Task } from "@/utils/types";
 import axios from "axios";
+import { useAuth } from "../context/authFunctions";
 
 // temp to test connections
 const api = axios.create({
   baseURL: "http://localhost:3333/api",
   headers: {
     "Content-Type": "application/json",
+    // temp fix to deal with login token
+    Authorization: localStorage.getItem("token"),
   },
 });
 
@@ -17,15 +20,6 @@ export const getApiTask = async () => {
     throw error;
   }
 };
-
-// export const getApiTask = async () => {
-//   try {
-//     return await api.get(`/tasks`);
-//   } catch (error) {
-//     console.error(`[Api Error] - Fetching Tasks: ${error}`);
-//     throw error;
-//   }
-// };
 
 export const addApiTask = async (taskData: Task) => {
   try {
