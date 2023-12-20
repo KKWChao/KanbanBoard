@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "./components/Navbar";
 import KanbanBoard from "./components/KanbanBoard";
 import Login from "./components/Login";
