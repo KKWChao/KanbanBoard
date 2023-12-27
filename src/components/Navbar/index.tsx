@@ -1,10 +1,12 @@
-import { useAuth } from "@/context";
+import { useAuth } from "@/context/authContext";
 
 const Navbar = () => {
-  const { token } = useAuth();
+  const { token, setToken } = useAuth();
 
-  const logoutFunction = () => {
-    return;
+  const logoutFunction = async () => {
+    setToken(null);
+    console.log("logging out");
+    window.location.reload();
   };
 
   return (
@@ -12,7 +14,7 @@ const Navbar = () => {
       <h1 className="text-2xl text-rose-500 ">Kanban Board</h1>
       <div>
         {token ? (
-          <button onClick={() => {}}>Logout</button>
+          <button onClick={logoutFunction}>Logout</button>
         ) : (
           <a href={"/login"}>Login</a>
         )}

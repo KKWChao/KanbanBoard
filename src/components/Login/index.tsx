@@ -1,13 +1,15 @@
 import { loginApi } from "@/api/auth";
 import React, { useState } from "react";
 import { AxiosResponse } from "axios";
-import { useAuth } from "../context/authFunctions";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/authContext";
 
 const Login = () => {
+  const { setToken } = useAuth();
+
   const [formEmail, setFormEmail] = useState<string>("");
   const [formPassword, setFormPassword] = useState<string>("");
-  const { setToken } = useAuth();
+
   const inputStyle = `px-4 py-2 text-lg rounded-sm without-ring`;
 
   const navigate = useNavigate();
@@ -24,12 +26,14 @@ const Login = () => {
       const tempToken = response?.data?.token;
 
       if (tempToken) {
-        // Save the token to local storage
-        localStorage.setItem("token", tempToken);
         setToken(tempToken);
+        localStorage.setItem("token", tempToken);
+        navigate("/");
       }
 
-      navigate("/");
+      if (tempToken == undefined) {
+        console.log("incorrect login");
+      }
     } catch (err) {
       console.error(`Error with handle form function ${err}`);
     }

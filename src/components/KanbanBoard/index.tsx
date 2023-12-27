@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { priorties, statuses } from "@/utils/tempData";
 import { Id, Status, Task } from "@/utils/types";
-import TaskCard from "./TaskCard";
+import TaskCard from "../TaskCard";
 import PlusIcon from "@/icons/PlusIcon";
-
 import { ClipLoader } from "react-spinners";
+
 import {
   getApiTask,
   addApiTask,
   updateApiTask,
   deleteApiTask,
 } from "@/api/taskApi";
-import { generateId } from "@/Helpers/generateId";
+import { generateId } from "@/helpers/generateId";
+import { useAuth } from "@/context/authContext";
 
 const KanbanBoard = () => {
+  const { token } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [hoverTask, setHoverTask] = useState<Status | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,15 +23,15 @@ const KanbanBoard = () => {
   useEffect(() => {
     setIsLoading(true);
     try {
-      getApiTask().then((res) => {
+      getApiTask(token).then((res) => {
         setTasks(res.data.data);
-        console.log(tasks);
       });
-      setIsLoading(false);
     } catch (error) {
       setIsLoading(true);
       console.error(`[Kanban Error] - Getting Tasks: ${error}`);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -54,7 +56,7 @@ const KanbanBoard = () => {
         vote: 0,
       };
 
-      await addApiTask(newTask);
+      await addApiTask(token, newTask);
 
       setTasks([...tasks, newTask]);
     } catch (error) {
@@ -65,7 +67,7 @@ const KanbanBoard = () => {
 
   const deleteTask = async (targetTaskId: Id) => {
     try {
-      await deleteApiTask(targetTaskId);
+      await deleteApiTask(token, targetTaskId);
 
       const updatedTask = tasks.filter((task) => {
         return task.id !== targetTaskId && { ...task };
@@ -80,7 +82,7 @@ const KanbanBoard = () => {
 
   const updateTask = async (task: Task) => {
     try {
-      await updateApiTask(task.id, task);
+      await updateApiTask(token, task.id, task);
 
       const updatedTask = tasks.map((targetTask) => {
         return targetTask.id === task.id ? task : targetTask;
