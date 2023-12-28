@@ -13,19 +13,24 @@ import {
 } from "@/api/taskApi";
 import { generateId } from "@/helpers/generateId";
 import { useAuth } from "@/context/authContext";
-
+// If no token, save to local storage instead
 const KanbanBoard = () => {
   const { token } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [hoverTask, setHoverTask] = useState<Status | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setIsLoading(true);
     try {
-      getApiTask(token).then((res) => {
-        setTasks(res.data.data);
-      });
+      if (token) {
+        getApiTask(token).then((res) => {
+          setTasks(res.data.data);
+        });
+      } else {
+        getApiTask(localStorage.getItem("token")).then((res) => {
+          setTasks(res.data.data);
+        });
+      }
     } catch (error) {
       setIsLoading(true);
       console.error(`[Kanban Error] - Getting Tasks: ${error}`);
@@ -33,7 +38,7 @@ const KanbanBoard = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [token]);
 
   const columns = statuses.map((status) => {
     const tasksInColumns = tasks?.filter((task) => task.status === status);

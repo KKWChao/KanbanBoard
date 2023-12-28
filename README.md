@@ -2,7 +2,7 @@
 
 ### TODO
 
-[]: remove input rings
-[]: Connect login api
-[]: set up context or statemanagement tool to manage login state
-[]:
+Inital Page for users
+Register needs to provide a token to maintain login state
+
+State for usage without sql backend connection?
