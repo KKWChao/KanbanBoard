@@ -11,8 +11,8 @@ import {
   updateApiTask,
   deleteApiTask,
 } from "@/api/taskApi";
-import { generateId } from "@/helpers/generateId";
 import { useAuth } from "@/context/authContext";
+import { generateId } from "@/Helpers/generateId";
 // If no token, save to local storage instead
 const KanbanBoard = () => {
   const { token } = useAuth();
@@ -24,16 +24,23 @@ const KanbanBoard = () => {
     try {
       if (token) {
         getApiTask(token).then((res) => {
+          console.log(res.data.data);
           setTasks(res.data.data);
+        });
+      } else if (!token) {
+        const token: string | null = localStorage.getItem("token");
+        getApiTask(token).then((res) => {
+          setTasks(res.data.data);
+          console.log(2);
         });
       } else {
-        getApiTask(localStorage.getItem("token")).then((res) => {
-          setTasks(res.data.data);
-        });
+        console.log("failed to retrieve");
       }
     } catch (error) {
       setIsLoading(true);
-      console.error(`[Kanban Error] - Getting Tasks: ${error}`);
+      console.error(
+        `[Kanban Component Error] - UseEffect - Getting Tasks: ${error}`
+      );
       throw error;
     } finally {
       setIsLoading(false);
@@ -48,12 +55,12 @@ const KanbanBoard = () => {
     };
   });
 
-  const addTask = async (column: Status) => {
+  const addTask = async (token: string | null, column: Status) => {
     try {
       const newTask = {
         id: generateId(),
         /* ADDED TEMP USER ID (REMOVE AFTER FINISHING) */
-        userId: "72916e17-6458-48b3-9ac2-b61836bbd2d1",
+        userId: localStorage.getItem("userId"),
         status: column,
         priority: priorties[0],
         title: "New Task",
@@ -65,7 +72,7 @@ const KanbanBoard = () => {
 
       setTasks([...tasks, newTask]);
     } catch (error) {
-      console.error(`[Kanban Error] - Adding Task: ${error}`);
+      console.error(`[Kanban Component Error] - Adding Task: ${error}`);
       throw error;
     }
   };
@@ -80,7 +87,7 @@ const KanbanBoard = () => {
 
       setTasks(updatedTask);
     } catch (error) {
-      console.error(`[Kanban Error] - Deleting Task: ${error}`);
+      console.error(`[Kanban Component Error] - Deleting Task: ${error}`);
       throw error;
     }
   };
@@ -95,7 +102,7 @@ const KanbanBoard = () => {
 
       setTasks(updatedTask);
     } catch (error) {
-      console.error(`[Kanban Error] - Updating Task: ${error}`);
+      console.error(`[Kanban Component Error] - Updating Task: ${error}`);
     }
   };
 
@@ -163,7 +170,7 @@ const KanbanBoard = () => {
             <button
               className="p-2 flex items-center justify-center rounded-b hover:bg-slate-700 active:bg-slate-800"
               onClick={() => {
-                addTask(column.status);
+                addTask(token, column.status);
               }}
             >
               <PlusIcon className="w-8 h-8" />

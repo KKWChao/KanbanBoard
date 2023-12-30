@@ -9,7 +9,7 @@ const Login = () => {
 
   const [formEmail, setFormEmail] = useState<string>("");
   const [formPassword, setFormPassword] = useState<string>("");
-  const [loginError, setLoginError] = useState<string | null>(null);
+  // const [loginError, setLoginError] = useState<string | null>(null);
 
   const inputStyle = `px-4 py-2 text-lg rounded-sm without-ring`;
 
@@ -27,8 +27,10 @@ const Login = () => {
       const tempToken = response?.data?.token;
 
       if (tempToken) {
+        console.log(tempToken);
         setToken(tempToken);
         localStorage.setItem("token", tempToken);
+        localStorage.setItem("userId", response?.data?.userId);
         navigate("/");
       }
 

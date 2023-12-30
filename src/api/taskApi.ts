@@ -11,12 +11,11 @@ const api = (token: string | null) =>
       Authorization: token,
     },
   });
-
 export const getApiTask = async (token: string | null) => {
   try {
     return await api(token).get(`/tasks`);
   } catch (error) {
-    console.error(`[Api Error] - Fetching Tasks: ${error}`);
+    console.error(`[Client Api Function Error] - Fetching Tasks: ${error}`);
     throw error;
   }
 };
@@ -25,7 +24,7 @@ export const addApiTask = async (token: string | null, taskData: Task) => {
   try {
     return await api(token).post(`/tasks`, taskData);
   } catch (error) {
-    console.error(`[Api Error] - Adding Tasks: ${error}`);
+    console.error(`[Client Api Function Error] - Adding Tasks: ${error}`);
     throw error;
   }
 };
@@ -38,7 +37,7 @@ export const updateApiTask = async (
   try {
     return await api(token).put(`/tasks/${taskId}`, taskData);
   } catch (error) {
-    console.error(`[Api Error] - Updating Task: ${error}`);
+    console.error(`[Client Api Function Error] - Updating Task: ${error}`);
     throw error;
   }
 };
@@ -51,7 +50,7 @@ export const updateSmallApiTask = async (
   try {
     return await api(token).patch(`/tasks/${taskId}`, taskData);
   } catch (error) {
-    console.error(`[Api Error] - Updating Task: ${error}`);
+    console.error(`[Client Api Function Error] - Updating Task: ${error}`);
     throw error;
   }
 };
@@ -60,7 +59,7 @@ export const deleteApiTask = async (token: string | null, taskId: Id) => {
   try {
     return await api(token).delete(`/tasks/${taskId}`);
   } catch (error) {
-    console.error(`[Api Error] - Deleting Task: ${error}`);
+    console.error(`[Client Api Function Error] - Deleting Task: ${error}`);
     throw error;
   }
 };
