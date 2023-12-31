@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
+import Submit from "../Button/submit";
 
 const Register = () => {
   const { setToken } = useAuth();
@@ -51,35 +52,41 @@ const Register = () => {
   }
 
   return (
-    <section className="h-[30rem] flex justify-center items-center ">
+    <section className="h-[95dvh] px-4 flex justify-center items-center ">
       <form
         action=""
-        className="flex flex-col container gap-4 text-slate-900"
+        className="lg:w-1/3 flex flex-col container gap-4 text-slate-900"
         onSubmit={handleSubmit}
       >
-        <h3 className="text-3xl text-rose-500 text-center">Register</h3>
+        <h3 className="text-5xl text-rose-500 text-center">Register</h3>
         <input
           type="text"
           className={inputStyle}
           placeholder="Email"
           value={formEmail}
+          minLength={5}
           onChange={(e) => setFormEmail(e.target.value)}
         />
+        {registerError && <p></p>}
         <div className="flex flex-col md:flex-row w-full gap-4 ">
           <input
             type="text"
             className={inputStyle}
             placeholder="First Name"
             value={formFirstName}
+            minLength={2}
             onChange={(e) => setFormFirstName(e.target.value)}
           />
+          {registerError && <p></p>}
           <input
             type="text"
             className={inputStyle}
             placeholder="Last Name"
             value={formLastName}
+            minLength={2}
             onChange={(e) => setFormLastName(e.target.value)}
           />
+          {registerError && <p></p>}
         </div>
 
         <input
@@ -87,15 +94,12 @@ const Register = () => {
           className={inputStyle}
           placeholder="Password"
           value={formPassword}
+          minLength={8}
           onChange={(e) => setFormPassword(e.target.value)}
         />
+        {registerError && <p></p>}
         <div className="w-full flex justify-center">
-          <button
-            className="py-2 px-8 text-white bg-slate-700 rounded"
-            type="submit"
-          >
-            Submit
-          </button>
+          <Submit>Submit</Submit>
         </div>
       </form>
     </section>

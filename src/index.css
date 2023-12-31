@@ -30,5 +30,5 @@ body,
 }
 
 .without-ring {
-  @apply ring-offset-0 ring-0;
+  @apply focus:ring-offset-0 ring-offset-0 focus:ring-0 ring-0 border-transparent focus:border-transparent outline-none focus:outline-none;
 }

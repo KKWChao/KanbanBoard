@@ -51,7 +51,7 @@ const KanbanBoard = () => {
 
   // add this to useEffect to have it load on api call
   const columns = statuses.map((status) => {
-    const tasksInColumns = tasks?.filter((task) => task?.status == status);
+    const tasksInColumns = tasks.filter((task) => task?.status == status);
     return {
       status,
       tasks: tasksInColumns,
@@ -84,7 +84,7 @@ const KanbanBoard = () => {
     try {
       await deleteApiTask(token, targetTaskId);
 
-      const updatedTask = tasks?.filter((task) => {
+      const updatedTask = tasks.filter((task) => {
         return task?.id !== targetTaskId && { ...task };
       });
 
@@ -99,7 +99,7 @@ const KanbanBoard = () => {
     try {
       await updateApiTask(token, task?.id, task);
 
-      const updatedTask = tasks?.map((targetTask) => {
+      const updatedTask = tasks.map((targetTask) => {
         return targetTask?.id === task?.id ? task : targetTask;
       });
 
@@ -113,7 +113,7 @@ const KanbanBoard = () => {
     event.preventDefault();
     setHoverTask(null);
     const id = event.dataTransfer.getData("id");
-    const task = tasks?.find((task) => task?.id === id);
+    const task = tasks.find((task) => task?.id === id);
 
     if (task) {
       updateTask({ ...task, status });
@@ -121,12 +121,12 @@ const KanbanBoard = () => {
   };
 
   return (
-    <article className="max-h-[95dvh] p-12">
+    <article className="max-h-[95dvh] md:p-12 p-4">
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Columns */}
         {columns.map((column) => (
           <section
-            className={`h-fit flex flex-col gap-2  rounded border-2 border-slate-800 ${
+            className={`h-fit flex flex-col gap-2 rounded border-2 border-slate-800 ${
               hoverTask === column.status ? "bg-slate-800" : "bg-slate-900"
             }`}
             key={column.status}

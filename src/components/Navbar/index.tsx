@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full p-4 h-[5dvh] bg-slate-800 flex items-center justify-between">
-      <h1 className="text-2xl text-rose-500 ">Kanban Board</h1>
+      <h1 className="text-4xl text-rose-500 ">Kanban</h1>
       <div>
         {token || localStorage.getItem("token") ? (
           <button onClick={logoutFunction}>Logout</button>

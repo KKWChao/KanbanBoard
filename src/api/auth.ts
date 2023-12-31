@@ -12,7 +12,7 @@ export const loginApi = async (login: Login) => {
   try {
     return await api.post(`/login`, login);
   } catch (err) {
-    console.error(`[Client Error] - Logging in: ${err}`);
+    console.error(`[Client Api Error] - Logging in: ${err}`);
   }
 };
 
