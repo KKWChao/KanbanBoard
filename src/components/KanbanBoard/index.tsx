@@ -20,9 +20,7 @@ const KanbanBoard = () => {
   const [hoverTask, setHoverTask] = useState<Status | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [columns, setColumns] = useState<
-    { status: Status; tasks: Task[] }[] | undefined
-  >(undefined);
+  // const [columns, setColumns] = useState();
 
   if (!token) {
     token = localStorage.getItem("token");
@@ -35,11 +33,11 @@ const KanbanBoard = () => {
     try {
       if (token) {
         getApiTask(token).then((res) => {
-          setTasks(res.data.data);
+          setTasks(res.data.data || []);
         });
       } else {
         getApiTask(localStorage.getItem("token")).then((res) => {
-          setTasks(res.data.data);
+          setTasks(res.data.data || []);
         });
       }
     } catch (error) {
@@ -52,17 +50,13 @@ const KanbanBoard = () => {
   }, [token]);
 
   // add this to useEffect to have it load on api call
-  useEffect(() => {
-    const dummy = statuses.map((status) => {
-      const tasksInColumns = tasks?.filter((task) => task.status === status);
-      return {
-        status,
-        tasks: tasksInColumns,
-      };
-    });
-
-    setColumns(dummy);
-  }, [tasks]);
+  const columns = statuses.map((status) => {
+    const tasksInColumns = tasks?.filter((task) => task?.status == status);
+    return {
+      status,
+      tasks: tasksInColumns,
+    };
+  });
 
   const addTask = async (column: Status) => {
     try {
@@ -91,7 +85,7 @@ const KanbanBoard = () => {
       await deleteApiTask(token, targetTaskId);
 
       const updatedTask = tasks?.filter((task) => {
-        return task.id !== targetTaskId && { ...task };
+        return task?.id !== targetTaskId && { ...task };
       });
 
       setTasks(updatedTask);
@@ -103,10 +97,10 @@ const KanbanBoard = () => {
 
   const updateTask = async (task: Task) => {
     try {
-      await updateApiTask(token, task.id, task);
+      await updateApiTask(token, task?.id, task);
 
       const updatedTask = tasks?.map((targetTask) => {
-        return targetTask.id === task.id ? task : targetTask;
+        return targetTask?.id === task?.id ? task : targetTask;
       });
 
       setTasks(updatedTask);
@@ -119,7 +113,7 @@ const KanbanBoard = () => {
     event.preventDefault();
     setHoverTask(null);
     const id = event.dataTransfer.getData("id");
-    const task = tasks?.find((task) => task.id === id);
+    const task = tasks?.find((task) => task?.id === id);
 
     if (task) {
       updateTask({ ...task, status });
@@ -130,7 +124,7 @@ const KanbanBoard = () => {
     <article className="max-h-[95dvh] p-12">
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Columns */}
-        {columns?.map((column) => (
+        {columns.map((column) => (
           <section
             className={`h-fit flex flex-col gap-2  rounded border-2 border-slate-800 ${
               hoverTask === column.status ? "bg-slate-800" : "bg-slate-900"
@@ -166,7 +160,7 @@ const KanbanBoard = () => {
               )}
               {/* Tasks */}
               {column.tasks?.map((task) => (
-                <React.Fragment key={task.id}>
+                <React.Fragment key={task?.id}>
                   <TaskCard
                     task={task}
                     updateTask={updateTask}

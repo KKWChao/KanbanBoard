@@ -1,4 +1,4 @@
-export type Id = string;
+export type Id = string | undefined;
 
 export type Status = 1 | 2 | 3;
 
@@ -11,7 +11,7 @@ export type Task = {
   title: string;
   sub: string;
   vote: number;
-};
+} | null;
 
 export type Board = {
   id: Id;

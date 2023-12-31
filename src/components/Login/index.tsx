@@ -1,6 +1,6 @@
 import { loginApi } from "@/api/auth";
 import React, { useState } from "react";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
 
@@ -29,6 +29,7 @@ const Login = () => {
       if (tempToken) {
         setToken(tempToken);
         localStorage.setItem("token", tempToken);
+        axios.defaults.headers.common["Authorization"] = tempToken;
         navigate("/");
       }
 
