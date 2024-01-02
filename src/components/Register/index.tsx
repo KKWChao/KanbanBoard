@@ -22,13 +22,14 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response: AxiosResponse | undefined = await registerApi({
+      const response = await registerApi({
         email: formEmail,
         first_name: formFirstName,
         last_name: formLastName,
         password: formPassword,
       });
 
+      console.log(response);
       // TODO - add validation and error logic
 
       // TODO - add logic to auto sign in after registering
@@ -44,7 +45,6 @@ const Register = () => {
       // if (tempToken == undefined) {
       //   console.log("incorrect login");
       // }\
-      console.log(response);
       navigate("/");
     } catch (err) {
       console.error(`Error with handle form function ${err}`);
@@ -65,6 +65,7 @@ const Register = () => {
           placeholder="Email"
           value={formEmail}
           minLength={5}
+          required
           onChange={(e) => setFormEmail(e.target.value)}
         />
         {registerError && <p></p>}
@@ -75,6 +76,7 @@ const Register = () => {
             placeholder="First Name"
             value={formFirstName}
             minLength={2}
+            required
             onChange={(e) => setFormFirstName(e.target.value)}
           />
           {registerError && <p></p>}
@@ -84,6 +86,7 @@ const Register = () => {
             placeholder="Last Name"
             value={formLastName}
             minLength={2}
+            required
             onChange={(e) => setFormLastName(e.target.value)}
           />
           {registerError && <p></p>}
@@ -95,6 +98,7 @@ const Register = () => {
           placeholder="Password"
           value={formPassword}
           minLength={8}
+          required
           onChange={(e) => setFormPassword(e.target.value)}
         />
         {registerError && <p></p>}

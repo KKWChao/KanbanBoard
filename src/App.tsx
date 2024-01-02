@@ -16,8 +16,9 @@ function App() {
         {token || localStorage.getItem("token") ? (
           <Route path={"/"} element={<KanbanBoard />} />
         ) : (
-          <Route path={"/"} element={<Register />} />
+          <Route path={"/"} element={<Login />} />
         )}
+
         {/* <Route path={"/"} element={<KanbanBoard />} /> */}
         <Route path={"/login"} element={<Login />} />
         <Route path={"/account"} element={<Account />} />

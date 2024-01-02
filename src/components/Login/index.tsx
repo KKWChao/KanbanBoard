@@ -25,6 +25,7 @@ const Login = () => {
         password: formPassword,
       });
 
+      // figure out how to get the response code for duplicate user
       if (response?.data.success) {
         const tempToken = response?.data?.token;
         setToken(tempToken);
@@ -32,7 +33,8 @@ const Login = () => {
         navigate("/");
       }
 
-      if (response?.data.success === false) {
+      if (response?.data.success == false) {
+        window.alert("Incorrect Login");
         console.log("incorrect login");
       }
     } catch (err) {
@@ -54,6 +56,7 @@ const Login = () => {
           placeholder="Email"
           value={formEmail}
           minLength={3}
+          required
           onChange={(e) => setFormEmail(e.target.value)}
         />
         {loginError == "ERR_USERNAME" && <p>Error</p>}
@@ -63,6 +66,7 @@ const Login = () => {
           placeholder="Password"
           value={formPassword}
           minLength={8}
+          required
           onChange={(e) => setFormPassword(e.target.value)}
         />
         {loginError == "ERR_PW" && <p>Error</p>}
