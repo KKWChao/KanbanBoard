@@ -29,7 +29,8 @@ const Register = () => {
         password: formPassword,
       });
 
-      console.log(response);
+      console.log(`test ${response}`);
+
       // TODO - add validation and error logic
 
       // TODO - add logic to auto sign in after registering
