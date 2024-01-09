@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
 import Submit from "../Button/submit";
+import { SuccessModal, FailureModal } from "../Modals";
 
 const Register = () => {
   const { setToken } = useAuth();
@@ -53,7 +54,8 @@ const Register = () => {
   }
 
   return (
-    <section className="h-[95dvh] px-4 flex justify-center items-center ">
+    <section className="h-[95dvh] px-4 flex justify-center items-center relative">
+      <SuccessModal />
       <form
         action=""
         className="lg:w-1/3 flex flex-col container gap-4 text-slate-900"

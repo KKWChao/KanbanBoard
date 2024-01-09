@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Login, Register } from "@/utils/types";
 
 const api = axios.create({
@@ -10,7 +10,17 @@ const api = axios.create({
 
 export const loginApi = async (login: Login) => {
   try {
-    return await api.post(`/login`, login);
+    // return await api.post(`/login`, login);
+    const response: AxiosResponse = await api.post(`/login`, login);
+    console.log(response);
+    // Check if the response status is not in the range of 2xx
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(
+        `Server responded with non-2xx status: ${response.status}`
+      );
+    }
+    console.log(response);
+    return response;
   } catch (err) {
     console.error(`[Client Api Error] - Logging in: ${err}`);
   }

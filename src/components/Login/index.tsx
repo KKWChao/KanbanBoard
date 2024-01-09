@@ -30,10 +30,25 @@ const Login = () => {
         setToken(tempToken);
         localStorage.setItem("token", tempToken);
         navigate("/");
-      }
+      } else {
+        const errorCode = response?.status;
+        console.log(errorCode);
 
-      if (tempToken == undefined) {
-        console.log("incorrect login");
+        switch (errorCode) {
+          case 401:
+            console.log("Invalid username or password");
+            break;
+          case 404:
+            console.log("User not found");
+            break;
+
+          case 500:
+            console.log("Internal server error");
+            break;
+          default:
+            console.log("Unknown error");
+            break;
+        }
       }
     } catch (err) {
       console.error(`Error with handle form function ${err}`);
