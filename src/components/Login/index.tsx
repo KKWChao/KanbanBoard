@@ -45,6 +45,7 @@ const Login = () => {
           case 500:
             console.log("Internal server error");
             break;
+
           default:
             console.log("Unknown error");
             break;

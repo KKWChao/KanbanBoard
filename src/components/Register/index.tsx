@@ -14,6 +14,7 @@ const Register = () => {
   const [formFirstName, setFormFirstName] = useState<string>("");
   const [formLastName, setFormLastName] = useState<string>("");
   const [registerError, setRegisterError] = useState<string | null>(null);
+  const [status, setStatus] = useState<boolean>(true);
 
   const inputStyle = `w-full px-4 py-2 text-lg rounded-sm without-ring`;
 
@@ -55,7 +56,18 @@ const Register = () => {
 
   return (
     <section className="h-[95dvh] px-4 flex justify-center items-center relative">
-      <SuccessModal />
+      <button
+        className="p-4 bg-green-400 rounded"
+        onClick={() => setStatus(!status)}
+      >
+        test
+      </button>
+      {status ? (
+        <SuccessModal title="Success!" message="" />
+      ) : (
+        <FailureModal title="Error:" message="Incorrect Login" />
+      )}
+
       <form
         action=""
         className="lg:w-1/3 flex flex-col container gap-4 text-slate-900"

@@ -1,21 +1,28 @@
-export const SuccessModal = () => {
+type Props = {
+  title: string | number;
+  message?: string;
+};
+
+const alertStyle =
+  "px-8 py-4 absolute top-8 left-1/2 transform -translate-x-1/2 rounded bg-opacity-30 flex items-center justify-center shadow-md";
+
+export const SuccessModal = ({ title, message }: Props) => {
   return (
     <aside
       role="alert"
-      className="absolute top-10 left-1/2 transform -translate-x-1/2 h-24 w-1/4 bg-blue-500 rounded bg-opacity-30 flex items-center justify-center"
+      className={`${alertStyle} bg-blue-500 transition translate-y-2 `}
     >
-      <h3 className="">Success</h3>
+      <h3 className="">{title}&nbsp;</h3>
+      <p>{message}</p>
     </aside>
   );
 };
 
-export const FailureModal = () => {
+export const FailureModal = ({ title, message }: Props) => {
   return (
-    <aside
-      role="alert"
-      className="absolute left-1/2 transform -translate-x-1/2  h-1/4 w-1/2 bg-red-500 rounded"
-    >
-      Failure
+    <aside role="alert" className={`${alertStyle} bg-red-500`}>
+      <h3 className="">{title}&nbsp;</h3>
+      <p>{message}</p>
     </aside>
   );
 };
