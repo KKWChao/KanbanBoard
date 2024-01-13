@@ -19,10 +19,11 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response: AxiosResponse | undefined = await loginApi({
+      const response = await loginApi({
         email: formEmail,
         password: formPassword,
       });
+      console.log(response);
 
       const tempToken = response?.data?.token;
 

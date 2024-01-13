@@ -63,9 +63,9 @@ const Register = () => {
         test
       </button>
       {status ? (
-        <SuccessModal title="Success!" message="" />
+        <SuccessModal title="Success!" code={200} message="" />
       ) : (
-        <FailureModal title="Error:" message="Incorrect Login" />
+        <FailureModal title="Error" code={401} message="Incorrect Login" />
       )}
 
       <form
