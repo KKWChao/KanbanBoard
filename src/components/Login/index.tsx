@@ -23,8 +23,9 @@ const Login = () => {
         email: formEmail,
         password: formPassword,
       });
-      console.log(response);
 
+      console.log(response);
+      // console.log(response);
       const tempToken = response?.data?.token;
 
       if (tempToken) {
@@ -33,7 +34,6 @@ const Login = () => {
         navigate("/");
       } else {
         const errorCode = response?.status;
-        console.log(errorCode);
 
         switch (errorCode) {
           case 401:

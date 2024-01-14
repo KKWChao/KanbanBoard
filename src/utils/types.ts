@@ -29,3 +29,9 @@ export type Register = {
   last_name: string;
   password: string;
 };
+
+export type ErrorType = {
+  success: boolean;
+  error: string;
+  message: string;
+};

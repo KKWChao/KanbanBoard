@@ -14,8 +14,8 @@ export const loginApi = async (login: Login) => {
     const response: AxiosResponse = await api.post(`/login`, login);
     return response;
   } catch (err) {
-    console.error(`[Client Api Error] - Logging in: ${err}`);
-    return err;
+    console.log(`[Client Api Error] - Logging in: ${err}`);
+    return err.response;
   }
 };
 
