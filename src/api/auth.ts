@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Login, Register } from "@/utils/types";
+import { ErrorType, Login, Register } from "@/utils/types";
 
 const api = axios.create({
   baseURL: "http://localhost:3333/auth",
@@ -14,8 +14,14 @@ export const loginApi = async (login: Login) => {
     const response: AxiosResponse = await api.post(`/login`, login);
     return response;
   } catch (err) {
+    const errorObject: ErrorType = {
+      success: false,
+      error: "Internal server error",
+      message: err.code,
+    };
+
     console.log(`[Client Api Error] - Logging in: ${err}`);
-    return err.response;
+    return errorObject;
   }
 };
 
